@@ -313,8 +313,101 @@ a:focus {
   margin: var(--spacing-0);
 }
 
-.gatsby-highlight {
-  margin-bottom: var(--spacing-8);
+/* .gatsby-highlight { */
+  .blog-post .tags ul {
+    list-style: none;
+  }
+  
+  /**
+   * tag list
+   */
+  .blog-post .tags ul li {
+    display: inline-block;
+    margin-right: 1rem;
+    text-align: center;
+  }
+  
+  .blog-post .tags ul li a {
+    display: block;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    text-decoration: none;
+    color: black;
+    font-size: 0.85rem;
+    border-width: 4px;
+    border-radius: 0.25rem;
+    background-color: #e9ddc5;
+  }
+  
+  .blog-post .tags ul li a:hover {
+    background-color: #d6c5a3;
+  }
+
+  .post-list-item .tags ul li {
+    display: inline-block;
+    margin-right: 1rem;
+    text-align: center;
+  }
+  
+  .post-list-item .tags ul li a {
+    display: block;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.15rem;
+    text-decoration: none;
+    color: black;
+    font-size: 0.85rem;
+    border-width: 4px;
+    border-radius: 0.25rem;
+    background-color: #e9ddc5;
+  }
+  
+  .post-list-item .tags ul li a:hover {
+    background-color: #d6c5a3;
+  }
+  
+  /**
+   * Add back the container background-color, border-radius, padding, margin
+   * and overflow that we removed from <pre>.
+   */
+   .gatsby-highlight {
+    margin-bottom: var(--spacing-8);
+      /* background-color: #1D1F21; atom color */
+  background-color: #0C0C0C;
+  border-radius: 0.3em;
+  /* margin: 0.5em 0; */
+  padding: 1em;
+  overflow: auto;
+}
+
+/**
+ * Remove the default PrismJS theme background-color, border-radius, margin,
+ * padding and overflow.
+ * 1. Make the element just wide enough to fit its content.
+ * 2. Always fill the visible space in .gatsby-highlight.
+ * 3. Adjust the position of the line numbers
+ */
+.gatsby-highlight pre[class*="language-"] {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  overflow: initial;
+  float: left; /* 1 */
+  min-width: 100%; /* 2 */
+}
+
+.gatsby-highlight-code-line {
+  background-color: #134896;
+  display: block;
+  margin-right: -1em;
+  margin-left: -1em;
+  padding-right: 1em;
+  padding-left: 0.75em;
+  border-left: 0.25em solid #f99;
+
 }
 
 /* Media queries */
