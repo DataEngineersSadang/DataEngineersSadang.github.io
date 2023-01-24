@@ -36,7 +36,7 @@
   --font-body: var(--fontFamily-serif);
   --font-heading: var(--fontFamily-sans);
   --fontWeight-normal: 400;
-  --fontWeight-bold: 700;
+  --fontWeight-bold: 500;
   --fontWeight-black: 900;
   --fontSize-root: 16px;
   --lineHeight-none: 1;
@@ -52,7 +52,7 @@
   --fontSize-5: 2.074rem;
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
-  --color-primary: #005b99;
+  --color-primary: #010c13;
   --color-text: #2e353f;
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
@@ -253,7 +253,9 @@ a:focus {
 }
 
 .main-heading {
-  font-size: var(--fontSize-7);
+  /* text-align: center; */
+  font-weight: var(--fontWeight-bold);
+  font-size: var(--fontSize-5);
   margin: 0;
 }
 
@@ -278,7 +280,7 @@ a:focus {
 }
 
 .header-link-home {
-  font-weight: var(--fontWeight-bold);
+  font-weight: var(--fontWeight-normal);
   font-family: var(--font-heading);
   text-decoration: none;
   font-size: var(--fontSize-2);
@@ -297,7 +299,7 @@ a:focus {
   margin-right: var(--spacing-4);
   margin-bottom: var(--spacing-0);
   min-width: 50px;
-  border-radius: 100%;
+  border-radius: 20%;
 }
 
 .blog-post header h1 {
@@ -358,15 +360,15 @@ a:focus {
     padding-top: 0.1rem;
     padding-bottom: 0.15rem;
     text-decoration: none;
-    color: black;
+    color: white;
     font-size: 0.85rem;
     border-width: 4px;
     border-radius: 0.25rem;
-    background-color: #e9ddc5;
+    background-color: #5c5c5c;
   }
   
   .post-list-item .tags ul li a:hover {
-    background-color: #d6c5a3;
+    background-color: #64acc2;
   }
   
   /**
