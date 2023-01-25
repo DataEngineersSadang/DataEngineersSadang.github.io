@@ -7,20 +7,17 @@ tags:
 ---
 
 # 1. 프로젝트 목적
+
 데이터 ETL 프로젝트를 구현해나가며, 흔히 사용하는 Tool들의 기능 및 목적을 공부하기 위해, 간단한 파이프라인을 설계하여, 함께 공부해보고자 한다
 
 > 간단한 프로젝트지만, 목적성이 있으면 하여, 일상에서 밀접한 context를 주제로 선정하기로 했다.
 > 최근 시위 및 사고, 지연 등으로 열차가 지연되는 사례가 잦아, 실시간 트윗들을 대시보드 형태로 시각화해주는 것은 어떨까
 
-
-
 # 2. 데이터 수집하기
 
 ## 지하철 역 정보 크롤링
 
-
-
-```
+```python
 import requests
 from bs4 import BeautifulSoup
 from html_table_parser import parser_functions
@@ -39,7 +36,7 @@ for data in tables:
 stations_list
 ```
 
-```
+```python
 for i, station in enumerate(stations_list):
     stations_text = ""
     if i % 25:
@@ -68,35 +65,32 @@ for chunk in divide_chunks(stations_list, 40):
 </div>
 </details>
 
-
-
-
-
-
-## Twitter Streaming API 
+## Twitter Streaming API
 
 [Tiwtter 라이브러리 git](https://github.com/twitterdev/Twitter-API-v2-sample-code/blob/main/Filtered-Stream/filtered_stream.py)
 
 ### 1. twitter api 세팅
 
-```
+```python
 import os
 TWIT_API_BEARER = os.environ.get("TWIT_API_BEARER")
 ```
 
 ### 2. Streaming Client 정의
+
 tweepy의 Streaming Client를 상속하여, on_data 메서드에서 파싱 처리
-```
+
+```python
 class TwitterStream(tweepy.StreamingClient):
     def on_data(self, status):
         twit = status.decode('utf-8')
         print(twit)
-        
-        
+
+
     def on_error(self, status_code):
         if status_code ==420:
             return False
-        
+
 
 
 def delete_all_rules(client, rules):
@@ -110,8 +104,10 @@ def delete_all_rules(client, rules):
 ```
 
 ### 3. Filter Rule 정의
+
 streaming 규칙 추가
-```
+
+```python
 def make_rules():
     # 스트림 규칙 추가1 - 1-9호선
     all_lines = "1호선 OR 2호선 OR 3호선 OR 4호선 OR 5호선 OR 6호선 OR 7호선 OR 8호선 OR 9호선 OR 경의중앙선 OR 신분당선 OR 수인분당선 OR 공항철도 OR 경춘선 OR 인천1호선 OR 경강선 OR 신림선"
@@ -131,7 +127,8 @@ def make_rules():
 ```
 
 ### 4. 메인 함수
-```
+
+```python
 # 트위치 클라이언트 인스턴스 생성
 client = TwitterStream(TWIT_API_BEARER)
 rules = client.get_rules()
@@ -150,17 +147,18 @@ print(client.get_rules())
 ```
 
 ### 5. 스트림 시작(한국어 필터링을 위한, "lang" 필드 추가
-```
+
+```python
 # 스트림 시작
 client.filter()
 ```
 
-----
+---
 
-## 3. Java로 Tiwtter API 수집하기 
-
+## 3. Java로 Tiwtter API 수집하기
 
 ### 1. 현재 streaming URI 내 존재하는 rule 찾기
+
 ```java
 private static List<String> getRules(String bearerToken) throws URISyntaxException, IOException {
         List<String> rules = new ArrayList<>();
@@ -191,6 +189,7 @@ private static List<String> getRules(String bearerToken) throws URISyntaxExcepti
 ```
 
 ### 2. 찾은 rule 제거
+
 ```java
 private static void deleteRules(String bearerToken, List<String> existingRules) throws URISyntaxException, IOException {
         HttpClient httpClient = HttpClients.custom()
@@ -214,6 +213,7 @@ private static void deleteRules(String bearerToken, List<String> existingRules) 
 ```
 
 ### 3. 원하는 rule 설정
+
 ```java
 private static void createRules(String bearerToken, Map<String, String> rules) throws URISyntaxException, IOException {
         HttpClient httpClient = HttpClients.custom()
@@ -222,7 +222,7 @@ private static void createRules(String bearerToken, Map<String, String> rules) t
                 .build();
 
         URIBuilder uriBuilder = new URIBuilder("https://api.twitter.com/2/tweets/search/stream/rules");
-        
+
         // POST method
         HttpPost httpPost = new HttpPost(uriBuilder.build());
         httpPost.setHeader("Authorization", String.format("Bearer %s", bearerToken));
@@ -238,10 +238,13 @@ private static void createRules(String bearerToken, Map<String, String> rules) t
 ```
 
 #### 3-1. rule에 사용된 언어에 따라 encoding 다르게 적용 필요
+
 ```java
 StringEntity body = new StringEntity(getFormattedString("{\"add\": [%s]}", rules), ContentType.APPLICATION_JSON);
 ```
+
 ### 4. streaming 진행
+
 ```java
 private static void connectStream(String bearerToken) throws IOException, URISyntaxException {
 
@@ -280,8 +283,6 @@ private static void connectStream(String bearerToken) throws IOException, URISyn
         }
     }
 ```
-
-
 
 ---
 
